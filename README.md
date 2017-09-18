@@ -11,7 +11,7 @@ so they exist anyway and i just collect them here.
 ### Misc
 Misc contains all static methods that can't be linked to any specifc class
 Currently contains methods for:
--case(in)sensitive searching of Strings in a String Array
+ - case(in)sensitive searching of Strings in a String Array
 ### Log
 A class for logging with multiple log levels and the ability to log complete exceptions.
 ### Conf
