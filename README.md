@@ -7,14 +7,14 @@ I know that, there some are popular (and probably better) alternatives for at le
 But I just wanted to do it my self. And most of them are extractions from other projects, 
 so they exist anyway and i just collect them here.
 
-##Overview
-###Misc
+##Overview##
+###Misc###
 Misc contains all static methods that can't be linked to any specifc class
 Currently contains methods for:
 -case(in)sensitive searching of Strings in a String Array
-###Log
+###Log###
 A class for logging with multiple log levels and the ability to log complete exceptions.
-###Conf
+###Conf###
 A class for managing configs on disk.
-###Data Manager
+###Data Manager###
 A few classes for saving and loading object data to/from disk.
