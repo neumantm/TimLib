@@ -1,11 +1,15 @@
 /*
  * TimLib
  * 
- * @copyright (c) Tim Neumann 2015-2017
- * @license CC BY-NC-SA 4.0
- *
- * @author Tim Neumann
+ * A collection of useful classes and methods.
+ * 
  * @version 1.2.0
+ * @author Tim Neumann
+ * @copyright (c) Tim Neumann 2015-2017
+ * @license:
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  *
  */
 package de.c_hack.tim.lib.DataManager;
