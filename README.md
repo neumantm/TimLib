@@ -7,6 +7,10 @@ I know that, there some are popular (and probably better) alternatives for at le
 But I just wanted to do it my self. And most of them are extractions from other projects, 
 so they exist anyway and i just collect them here.
 
+I will be working on some better documentation at some point.
+
+The compiled jars can be found under target.
+
 ## Overview
 ### Misc
 Misc contains all static methods that can't be linked to any specifc class
@@ -18,3 +22,6 @@ A class for logging with multiple log levels and the ability to log complete exc
 A class for managing configs on disk.
 ### Data Manager
 A few classes for saving and loading object data to/from disk.
+These use the good old java ObjectOutputStream and ObjectInputStream.
+I'm currently debating if I still want to continue using and maintaining this, 
+or switch to a more state of art json serialization.
