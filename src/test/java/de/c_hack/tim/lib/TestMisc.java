@@ -5,7 +5,7 @@
  * 
  * @version 1.2.0
  * @author Tim Neumann
- * @copyright (c) Tim Neumann 2015-2017
+ * @copyright (c) Tim Neumann 2015-2018
  * @license:
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -14,8 +14,8 @@
  */
 package de.c_hack.tim.lib;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Testing the Misc class
@@ -33,31 +33,30 @@ public class TestMisc {
 	public void testFindStringInArrStringArrayStringBoolean() {
 		String[] arr = { "asd", "", "a", "bf", "123zu", "BSAG", "bGf" };
 
-		Assert.assertEquals("Normal lowercase only", 0, Misc.findStringInArr(arr, "asd", true));
-		Assert.assertEquals("Normal lowercase only", 2, Misc.findStringInArr(arr, "a", true));
-		Assert.assertEquals("Normal lowercase only, empty", 1, Misc.findStringInArr(arr, "", true));
-		Assert.assertEquals("Normal lowercase only", 3, Misc.findStringInArr(arr, "bf", true));
-		Assert.assertEquals("Normal", 4, Misc.findStringInArr(arr, "123zu", true));
-		Assert.assertEquals("Normal", 5, Misc.findStringInArr(arr, "BSAG", true));
-		Assert.assertEquals("Normal", 6, Misc.findStringInArr(arr, "bGf", true));
-		Assert.assertEquals("caseInsensitve 1", 0, Misc.findStringInArr(arr, "ASD", false));
-		Assert.assertEquals("caseInsensitve 2", 0, Misc.findStringInArr(arr, "asd", false));
-		Assert.assertEquals("caseInsensitve 3", 0, Misc.findStringInArr(arr, "aSd", false));
-		Assert.assertEquals("caseInsensitve 4", 0, Misc.findStringInArr(arr, "AsD", false));
-		Assert.assertEquals("caseInsensitve", 1, Misc.findStringInArr(arr, "", false));
-		Assert.assertEquals("caseInsensitve", 5, Misc.findStringInArr(arr, "BSAG", false));
-		Assert.assertEquals("caseInsensitve", 5, Misc.findStringInArr(arr, "bsag", false));
-		Assert.assertEquals("caseInsensitve", 5, Misc.findStringInArr(arr, "BSaG", false));
-		Assert.assertEquals("caseInsensitve", 6, Misc.findStringInArr(arr, "bGf", false));
-		Assert.assertEquals("caseInsensitve", 6, Misc.findStringInArr(arr, "bgf", false));
-		Assert.assertEquals("caseInsensitve", 6, Misc.findStringInArr(arr, "BGF", false));
+		Assertions.assertEquals(0, Misc.findStringInArr(arr, "asd", true), "Normal lowercase only");
+		Assertions.assertEquals(2, Misc.findStringInArr(arr, "a", true), "Normal lowercase only");
+		Assertions.assertEquals(1, Misc.findStringInArr(arr, "", true), "Normal lowercase only, empty");
+		Assertions.assertEquals(3, Misc.findStringInArr(arr, "bf", true), "Normal lowercase only");
+		Assertions.assertEquals(4, Misc.findStringInArr(arr, "123zu", true), "Normal");
+		Assertions.assertEquals(5, Misc.findStringInArr(arr, "BSAG", true), "Normal");
+		Assertions.assertEquals(0, Misc.findStringInArr(arr, "ASD", false), "caseInsensitve 1");
+		Assertions.assertEquals(0, Misc.findStringInArr(arr, "asd", false), "caseInsensitve 2");
+		Assertions.assertEquals(0, Misc.findStringInArr(arr, "aSd", false), "caseInsensitve 3");
+		Assertions.assertEquals(0, Misc.findStringInArr(arr, "AsD", false), "caseInsensitve 4");
+		Assertions.assertEquals(1, Misc.findStringInArr(arr, "", false), "caseInsensitve");
+		Assertions.assertEquals(5, Misc.findStringInArr(arr, "BSAG", false), "caseInsensitve");
+		Assertions.assertEquals(5, Misc.findStringInArr(arr, "bsag", false), "caseInsensitve");
+		Assertions.assertEquals(5, Misc.findStringInArr(arr, "BSaG", false), "caseInsensitve");
+		Assertions.assertEquals(6, Misc.findStringInArr(arr, "bGf", false), "caseInsensitve");
+		Assertions.assertEquals(6, Misc.findStringInArr(arr, "bgf", false), "caseInsensitve");
+		Assertions.assertEquals(6, Misc.findStringInArr(arr, "BGF", false), "caseInsensitve");
 
-		Assert.assertEquals("NOT FOUND, normal", -1, Misc.findStringInArr(arr, "as", true));
-		Assert.assertEquals("NOT FOUND, normal", -1, Misc.findStringInArr(arr, "ASD", true));
-		Assert.assertEquals("NOT FOUND, normal", -1, Misc.findStringInArr(arr, "BF", true));
-		Assert.assertEquals("NOT FOUND, normal", -1, Misc.findStringInArr(arr, "123zU", true));
-		Assert.assertEquals("NOT FOUND, cI", -1, Misc.findStringInArr(arr, "as", false));
-		Assert.assertEquals("NOT FOUND, cI", -1, Misc.findStringInArr(arr, "5", false));
+		Assertions.assertEquals(-1, Misc.findStringInArr(arr, "as", true), "NOT FOUND, normal");
+		Assertions.assertEquals(-1, Misc.findStringInArr(arr, "ASD", true), "NOT FOUND, normal");
+		Assertions.assertEquals(-1, Misc.findStringInArr(arr, "BF", true), "NOT FOUND, normal");
+		Assertions.assertEquals(-1, Misc.findStringInArr(arr, "123zU", true), "NOT FOUND, normal");
+		Assertions.assertEquals(-1, Misc.findStringInArr(arr, "as", false), "NOT FOUND, cI");
+		Assertions.assertEquals(-1, Misc.findStringInArr(arr, "5", false), "NOT FOUND, cI");
 	}
 
 }

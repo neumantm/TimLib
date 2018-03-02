@@ -5,7 +5,7 @@
  * 
  * @version 1.2.0
  * @author Tim Neumann
- * @copyright (c) Tim Neumann 2015-2017
+ * @copyright (c) Tim Neumann 2015-2018
  * @license:
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -29,13 +29,14 @@ import java.util.Map.Entry;
 /**
  * A automated logger.
  * 
- * It can be configured to print errors to stdOut as well as multiple log files.
+ * It can be configured to print errors to stdout/stderr as well as multiple log
+ * files.
  * You can send a message with the log function.
  * It is also possible to log entire exceptions with stacktrace and so on.
  * 
  * It uses log or severity levels.
  * 
- * It can be set to absorb stdErr.
+ * It can be set to absorb stderr, but not if logging to stderr is enabled.
  * 
  * @author Tim Neumann
  */
@@ -59,37 +60,66 @@ public class Log {
 
 	/**
 	 * A list of files that the log get's written to with according log levels.
+	 * If a file is called std, stdout and stderr are used.
 	 */
-	HashMap<String, LogFile> files;
+	private HashMap<String, LogFile> files;
+
+	/** The used date format. */
+	private SimpleDateFormat df = new SimpleDateFormat("EEE, dd.MM.yy HH:mm:ss");
+
+	/** The highest log level to log to stderr instead of stdout. */
+	private int levelToStdErr = -1;
 
 	/**
-	 * The used date format.
-	 */
-	SimpleDateFormat df = new SimpleDateFormat("EEE, dd.MM.yy HH:mm:ss");
-
-	/**
-	 * Creates a new logger.
+	 * Creates a new logger. Without logging to stderr, only to stdout.
 	 * 
 	 * @param par_files
-	 *            The files to log to.
-	 * @param level
-	 *            The log level to use.
+	 *            The files to log to. (If a file is named "std", use stdout and
+	 *            stderr)
+	 * @param par_level
+	 *            The default log level to use.
 	 * @throws IOException
 	 *             File system exceptions
 	 */
-	public Log(String[] par_files, int level) throws IOException {
+	public Log(String[] par_files, int par_level) throws IOException {
+		this(par_files, par_level, -1);
+	}
+
+	/**
+	 * Creates a new logger
+	 * 
+	 * @param par_files
+	 *            The files to log to. (If a file is named "std", use stdout and
+	 *            stderr)
+	 * @param par_level
+	 *            The default log level to use.
+	 * @param par_levelToStdErr
+	 *            The highest log level to log to stderr instead of stdout.
+	 *            All log messages with this or a lower level will be logged to
+	 *            stderr,
+	 *            if they would have been logged to stdout.
+	 *            Enter a negativ number for turning of logging to stderr.
+	 *            If logging to stderr is enabled, redirectSTDErr to this
+	 *            logger is not possible.
+	 * @throws IOException
+	 *             File system exceptions
+	 */
+	public Log(String[] par_files, int par_level, int par_levelToStdErr) throws IOException {
+		this.levelToStdErr = par_levelToStdErr;
 		this.files = new HashMap<>();
 		for (String file : par_files) {
-			this.files.put(file, new LogFile(file, level));
+			this.files.put(file, new LogFile(file, par_level));
 		}
 	}
 
 	/**
 	 * Redirect the stderr of the application to this logger.
+	 * This doesn't work if logging to stderr is enabled. (eg if levelToStdErr
+	 * of the constructor is > -1)
 	 */
 	public void redirectSTDErr() {
+		if (this.levelToStdErr > -1) throw new IllegalStateException("Can't redirect stderr, if logging to stderr is enabled.");
 		//Create Stream
-
 		OutputStream oS = new OutputStream() {
 			/**
 			 * The buffer for the errorStream
@@ -197,8 +227,13 @@ public class Log {
 				msg = msg + " This is fatal. Exiting!" + System.getProperty("line.separator");
 			}
 
-			if (pair.getValue().getName() == "stdout") {
-				System.out.print(msg);
+			if (pair.getValue().getName() == "std") {
+				if (level < this.levelToStdErr) {
+					System.err.println(msg);
+				}
+				else {
+					System.out.print(msg);
+				}
 				continue;
 			}
 
@@ -263,8 +298,13 @@ public class Log {
 			msg += message;
 			msg += System.getProperty("line.separator");
 
-			if (pair.getValue().getName() == "stdout") {
-				System.out.print(msg);
+			if (pair.getValue().getName() == "std") {
+				if (level < this.levelToStdErr) {
+					System.err.println(msg);
+				}
+				else {
+					System.out.print(msg);
+				}
 				continue;
 			}
 
@@ -278,7 +318,7 @@ public class Log {
 	}
 
 	/**
-	 * Put's the file to the log with speciefied log level.. See {@link #files
+	 * Put's the file to the log with specified log level. See {@link #files
 	 * files}
 	 * 
 	 * @param par_file
@@ -310,6 +350,7 @@ public class Log {
 	 * @param level
 	 *            The new level to set.
 	 */
+
 	public void setLogLevel(String file, int level) {
 		if (this.files.containsKey(file)) {
 			LogFile lf = this.files.get(file);
@@ -375,7 +416,7 @@ public class Log {
 			this.name = p_name;
 			this.level = p_level;
 
-			if (p_name.equals("stdout")) {
+			if (p_name.equals("std")) {
 				this.bW = null;
 			}
 			else {
