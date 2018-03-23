@@ -65,7 +65,7 @@ public class Config {
 		}
 
 		//Create necessary directorys.
-		new File(p_path).getParentFile().mkdirs();
+		new File(p_path).getAbsoluteFile().getParentFile().mkdirs();
 
 		//Create File if not existent
 		if (!new File(p_path).exists()) {

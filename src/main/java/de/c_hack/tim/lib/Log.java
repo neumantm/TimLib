@@ -420,7 +420,7 @@ public class Log {
 				this.bW = null;
 			}
 			else {
-				File f = new File(p_name);
+				File f = new File(p_name).getAbsoluteFile();
 				if (!f.getParentFile().exists()) {
 					f.getParentFile().mkdirs();
 				}
