@@ -3,7 +3,7 @@
  * 
  * A collection of useful classes and methods.
  * 
- * @version 1.2.0
+ * @version 0.2.0
  * @author Tim Neumann
  * @copyright (c) Tim Neumann 2015-2018
  * @license:
@@ -420,11 +420,11 @@ public class Log {
 				this.bW = null;
 			}
 			else {
-				File dir = new File("logs");
-				if (!(dir.exists() && dir.isDirectory())) {
-					dir.mkdir();
+				File f = new File(p_name);
+				if (!f.getParentFile().exists()) {
+					f.getParentFile().mkdirs();
 				}
-				this.bW = new BufferedWriter(new FileWriter("logs/" + p_name, true));
+				this.bW = new BufferedWriter(new FileWriter(f, true));
 			}
 		}
 
