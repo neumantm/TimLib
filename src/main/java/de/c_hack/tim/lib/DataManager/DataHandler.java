@@ -3,7 +3,7 @@
  * 
  * A collection of useful classes and methods.
  * 
- * @version 1.2.0
+ * @version 0.2.0
  * @author Tim Neumann
  * @copyright (c) Tim Neumann 2015-2017
  * @license:
@@ -234,7 +234,8 @@ public class DataHandler<I, T extends DataObject<I>> {
 	 */
 	private void checkDataFile() throws IOException {
 		if (!this.location.exists()) {
-			if (!this.location.getParentFile().mkdirs()) throw new IOException("Couldn't create directory for the data file!");
+			this.location.getParentFile().mkdirs();
+			if (!this.location.getParentFile().exists()) throw new IOException("Couldn't create directory for the data file!");
 		}
 		else if (!(this.location.isFile() && this.location.canWrite())) throw new IOException("Can't write to the data file.");
 	}
