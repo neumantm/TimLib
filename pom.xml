@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.c-hack.tim</groupId>
   <artifactId>TimLib</artifactId>
-  <version>0.2.0</version>
+  <version>0.2.1</version>
   <name>Tim Libary</name>
   <description>A collection of usefull classes</description>
   <url>https://github.com/neumantm/TimLib/</url>

@@ -3,7 +3,6 @@
  * 
  * A collection of useful classes and methods.
  * 
- * @version 0.2.0
  * @author Tim Neumann
  * @copyright (c) Tim Neumann 2015-2018
  * @license:
@@ -184,68 +183,42 @@ public class Log {
 	 */
 	public void logException(Exception e, int level, boolean fatal) {
 		String msg;
-		Iterator<Entry<String, LogFile>> it = this.files.entrySet().iterator();
 
-		while (it.hasNext()) {
-			Entry<String, LogFile> pair = it.next();
+		switch (level) {
+			case 0:
+				msg = "[ERROR]";
+			break;
 
-			if (level > pair.getValue().getLevel()) {
-				continue;
-			}
+			case 1:
+				msg = "[WARN]";
+			break;
 
-			switch (level) {
-				case 0:
-					msg = "[ERROR]";
-				break;
+			case 2:
+				msg = "[INFO]";
+			break;
 
-				case 1:
-					msg = "[WARN]";
-				break;
+			case 3:
+				msg = "[DEBUG]";
+			break;
 
-				case 2:
-					msg = "[INFO]";
-				break;
-
-				case 3:
-					msg = "[DEBUG]";
-				break;
-
-				default:
-					msg = "[UNKNOWN LOG]";
-				break;
-			}
-
-			msg += "<" + this.df.format(new Date()) + "> ";
-			msg += e.getMessage();
-			msg += System.getProperty("line.separator");
-
-			for (StackTraceElement el : e.getStackTrace()) {
-				msg = msg + "   " + el.toString() + System.getProperty("line.separator");
-			}
-
-			if (fatal) {
-				msg = msg + " This is fatal. Exiting!" + System.getProperty("line.separator");
-			}
-
-			if (pair.getValue().getName() == "std") {
-				if (level < this.levelToStdErr) {
-					System.err.println(msg);
-				}
-				else {
-					System.out.print(msg);
-				}
-				continue;
-			}
-
-			try {
-				pair.getValue().getbW().write(msg);
-				pair.getValue().getbW().flush();
-
-			} catch (IOException e1) {
-				e1.printStackTrace();
-				System.exit(1111);
-			}
+			default:
+				msg = "[UNKNOWN LOG]";
+			break;
 		}
+
+		msg += "<" + this.df.format(new Date()) + "> ";
+		msg += e.toString();
+		msg += System.getProperty("line.separator");
+
+		for (StackTraceElement el : e.getStackTrace()) {
+			msg = msg + "   " + el.toString() + System.getProperty("line.separator");
+		}
+
+		if (fatal) {
+			msg = msg + " This is fatal. Exiting!" + System.getProperty("line.separator");
+		}
+
+		logString(msg, level);
 
 		if (fatal) {
 			System.exit(1);
@@ -263,6 +236,38 @@ public class Log {
 	 */
 	public void log(String message, int level) {
 		String msg;
+
+		switch (level) {
+			case 0:
+				msg = "[ERROR]";
+			break;
+
+			case 1:
+				msg = "[WARN]";
+			break;
+
+			case 2:
+				msg = "[INFO]";
+			break;
+
+			case 3:
+				msg = "[DEBUG]";
+			break;
+
+			default:
+				msg = "[UNKNOWN LOG]";
+			break;
+		}
+
+		msg += "<" + this.df.format(new Date()) + "> ";
+		msg += message;
+		msg += System.getProperty("line.separator");
+
+		logString(msg, level);
+
+	}
+
+	private void logString(String s, int level) {
 		Iterator<Entry<String, LogFile>> it = this.files.entrySet().iterator();
 
 		while (it.hasNext()) {
@@ -272,48 +277,23 @@ public class Log {
 				continue;
 			}
 
-			switch (level) {
-				case 0:
-					msg = "[ERROR]";
-				break;
-
-				case 1:
-					msg = "[WARN]";
-				break;
-
-				case 2:
-					msg = "[INFO]";
-				break;
-
-				case 3:
-					msg = "[DEBUG]";
-				break;
-
-				default:
-					msg = "[UNKNOWN LOG]";
-				break;
-			}
-
-			msg += "<" + this.df.format(new Date()) + "> ";
-			msg += message;
-			msg += System.getProperty("line.separator");
-
 			if (pair.getValue().getName() == "std") {
-				if (level < this.levelToStdErr) {
-					System.err.println(msg);
+				if (level <= this.levelToStdErr) {
+					System.err.println(s);
 				}
 				else {
-					System.out.print(msg);
+					System.out.print(s);
 				}
 				continue;
 			}
 
 			try {
-				pair.getValue().getbW().write(msg);
+				pair.getValue().getbW().write(s);
 				pair.getValue().getbW().flush();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+
 		}
 	}
 
@@ -420,7 +400,7 @@ public class Log {
 				this.bW = null;
 			}
 			else {
-				File f = new File(p_name);
+				File f = new File(p_name).getAbsoluteFile();
 				if (!f.getParentFile().exists()) {
 					f.getParentFile().mkdirs();
 				}

@@ -1,5 +1,4 @@
-/target/*
-!/target/*.jar
+/target/
 /bin/
 *.conf
 /logs/

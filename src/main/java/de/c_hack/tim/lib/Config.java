@@ -3,9 +3,8 @@
  * 
  * A collection of useful classes and methods.
  * 
- * @version 0.2.0
  * @author Tim Neumann
- * @copyright (c) Tim Neumann 2015-2017
+ * @copyright (c) Tim Neumann 2015-2018
  * @license:
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -65,7 +64,10 @@ public class Config {
 		}
 
 		//Create necessary directorys.
-		new File(p_path).getParentFile().mkdirs();
+		File parent = new File(p_path).getAbsoluteFile().getParentFile();
+		if (parent != null) {
+			parent.mkdirs();
+		}
 
 		//Create File if not existent
 		if (!new File(p_path).exists()) {
