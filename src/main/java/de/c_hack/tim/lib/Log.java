@@ -3,7 +3,6 @@
  * 
  * A collection of useful classes and methods.
  * 
- * @version 0.2.0
  * @author Tim Neumann
  * @copyright (c) Tim Neumann 2015-2018
  * @license:
