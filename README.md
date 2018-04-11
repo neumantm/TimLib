@@ -11,6 +11,8 @@ I will be working on some better documentation at some point.
 
 Compiled jars can be found in the [Releases](https://github.com/neumantm/TimLib/releases).
 
+To package jars: `mvn compile package`
+
 To get this jar into mvn run:
 `mvn install:install-file -Dfile=<path-to-file>`
 
