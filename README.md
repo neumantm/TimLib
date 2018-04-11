@@ -9,7 +9,10 @@ so they exist anyway and i just collect them here.
 
 I will be working on some better documentation at some point.
 
-The compiled jars can be found under target.
+Compiled jars can be found in the [Releases](https://github.com/neumantm/TimLib/releases).
+
+To get this jar into mvn run:
+`mvn install:install-file -Dfile=<path-to-file>`
 
 ## Overview
 ### Misc
