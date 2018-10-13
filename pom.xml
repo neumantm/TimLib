@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.c-hack.tim</groupId>
   <artifactId>TimLib</artifactId>
-  <version>0.2.1</version>
+  <version>0.2.3</version>
   <name>Tim Libary</name>
   <description>A collection of usefull classes</description>
   <url>https://github.com/neumantm/TimLib/</url>
@@ -52,6 +52,7 @@
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-javadoc-plugin</artifactId>
+			<version>3.0.1</version>
 			<executions>
 				<execution>
 					<id>attach-javadocs</id>
@@ -63,4 +64,16 @@
 		</plugin>
 	</plugins>
   </build>  
+  <distributionManagement>
+    <repository>
+      <id>c-hack.internal</id>
+      <name>C-Hack Internal Release Repository</name>
+      <url>https://maven.c-hack.de/repository/internal/</url>
+    </repository>
+    <snapshotRepository>
+      <id>c-hack.snapshots</id>
+      <name>C-Hack Internal Snapshot Repository</name>
+      <url>https://maven.c-hack.de/repository/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
 </project>
